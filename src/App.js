@@ -1,25 +1,38 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {FormGroup, FormLabel, FormControl} from 'react-bootstrap'
+
+
+let marked = require("marked");
 
 class App extends Component {
+
+  state = {
+    markdown: ""
+  }
+
+updateMarkdown = function(markdown){
+  this.setState({markdown});
+}
+
   render() {
+let {markdown} = this.state;
+console.log(markdown);
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="App container">
+      <div>
+      <FormGroup controlId="formControlsTextarea">
+  <ControlLabel>Markdown Input</ControlLabel>
+  <FormControl componentClass="textarea" placeholder="Enter Markdown" value=(markdown) onChange={(event)=>this.updateMarkdown(event.target.value)}> </FormControl>
+</FormGroup>
+        </div>
+        <div>
+        <h1>Markdown output</h1>
+        <div> {{marked(markdown)}}</div>
+        <div dangerouslySetInnerHTML = {{__html: marked(markdown)}}></div>
+        </div>
       </div>
     );
   }
